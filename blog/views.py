@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView
 from .models import Post
 from .forms import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 
 class PostListView(ListView):
@@ -42,3 +45,9 @@ class PostDetailView(DetailView):
         context = self.get_context_data()
         context['form'] = form
         return self.render_to_response(context)
+    
+
+class SignupView(CreateView):
+    form_class = UserCreationForm
+    template_name = "registration/signup.html"
+    success_url = reverse_lazy('login')    
